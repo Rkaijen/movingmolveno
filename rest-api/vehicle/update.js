@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
   host: '185.87.187.148',
   user: 'robkai1q_movingmolveno',
   pwrd: 'mcrajmolveno2019',
-  name: 'nodrobkai1q_movingmolvenoetest'
+  name: 'robkai1q_movingmolveno'
 });
 
 connection.connect((err) => {
