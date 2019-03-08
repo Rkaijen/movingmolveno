@@ -5,7 +5,7 @@ const mysql = require('mysql');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
-const fn = require('../private/functions');
+const fn = require('../../private/functions');
 
 app.use(bodyParser.json());
 
@@ -16,31 +16,24 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 // MYSQL CONNECT
 const connection = fn.dbconnection(mysql);
-
 connection.connect((err) => {
-  if (err) {
-    throw err;
-  } else {
-    console.log('Connected!');
-  }
+  if (err) { throw err }
+  else { console.log('Database connection established!') }
 });
 
-
 // Get all free vehicles
-app.get('/api/vehicles', function(req, res) {
+app.get('/api/vehicle', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
-  connection.query('SELECT * FROM vehicles', (err, vehicles) => {
+  connection.query('SELECT * FROM vehicle', (err, vehicle) => {
     if (!err) {
-      res.end(JSON.stringify(vehicles));
+      res.end(JSON.stringify(vehicle));
     } else {
       throw err;
     }
   });
 });
-
 
 // Run server on port 8081
 let server = app.listen(8081, function() {
