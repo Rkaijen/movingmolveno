@@ -2,6 +2,8 @@ const mysql = require( 'mysql' )
 const express = require( 'express' )
 const app = express()
 const bodyParser = require( 'body-parser' )
+const fn = require('../../private/functions');
+const connection = fn.dbconnection(mysql);
 
 app.use( bodyParser.json() )
 app.use( function(req, res, next) {
@@ -10,20 +12,6 @@ app.use( function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
-const connection = mysql.createConnection({
-  host: '185.87.187.148',
-  user: 'robkai1q_movingmolveno',
-  pwrd: 'mcrajmolveno2019',
-  name: 'nodrobkai1q_movingmolvenoetest'
-});
-
-connection.connect((err) => {
-  if (err) {
-    throw err;
-  } else {
-    console.log('Create Vehicle Connected');
-  }
-});
 
 app.post('/rest-api/vehicles', function(req, res) {
 
