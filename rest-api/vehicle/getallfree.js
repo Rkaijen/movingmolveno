@@ -20,13 +20,13 @@ app.use(function(req, res, next) {
 const connection = fn.dbconnection(mysql);
 connection.connect((err) => {
   if (err) { throw err }
-  else { console.log('Database connection established!') }
 });
 
 // Get all free vehicles
-app.get('/api/vehicle', function(req, res) {
+app.get('/api/vehicle/free', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
-  connection.query('SELECT * FROM vehicle', (err, vehicle) => {
+  // connection.query('SELECT * FROM vehicle', (err, vehicle) => {
+  connection.query('SELECT * FROM vehicle LEFT JOIN ride ON ride.vehicle_id WHERE ride.endtime IS NOT NULL', (err, vehicle) => {
     if (!err) {
       res.end(JSON.stringify(vehicle));
     } else {
