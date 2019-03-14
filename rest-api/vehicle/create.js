@@ -2,6 +2,7 @@ const mysql = require( 'mysql' )
 const express = require( 'express' )
 const app = express()
 const bodyParser = require( 'body-parser' )
+const fn = require('../private/functions');
 
 app.use( bodyParser.json() )
 app.use( function(req, res, next) {
@@ -10,12 +11,8 @@ app.use( function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
-const connection = mysql.createConnection({
-  host: '185.87.187.148',
-  user: 'robkai1q_movingmolveno',
-  pwrd: 'mcrajmolveno2019',
-  name: 'nodrobkai1q_movingmolvenoetest'
-});
+// MYSQL CONNECT
+const connection = fn.dbconnection(mysql);
 
 connection.connect((err) => {
   if (err) {
@@ -28,7 +25,7 @@ connection.connect((err) => {
 app.post('/rest-api/vehicles', function(req, res) {
 
 let vehicle = req.body;
-connection.query('INSERT INTO vehicles SET ?', question, (err, result) => {
+connection.query('INSERT INTO vehicles SET ?', vehicle, (err, result) => {
   if (!err) {
     res.setHeader('Content-Type', 'application/json')
     connection.query('SELECT * FROM vehicles where id=?', result.insertId, (err, rows) => {
@@ -49,4 +46,8 @@ connection.query('INSERT INTO vehicles SET ?', question, (err, result) => {
     throw err;
   }
 });
+});
+// Run server on port 8081
+let server = app.listen(8081, function() {
+  console.log("Server respond at http://%s:%s", server.address().address, server.address().port)
 });
