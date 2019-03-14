@@ -2,7 +2,7 @@ const mysql = require( 'mysql' )
 const express = require( 'express' )
 const app = express()
 const bodyParser = require( 'body-parser' )
-const fn = require('../private/functions');
+const fn = require('../../private/functions');
 
 app.use( bodyParser.json() )
 app.use( function(req, res, next) {
@@ -24,7 +24,7 @@ connection.connect((err) => {
 app.delete(`/api/vehicles/:id`, function( req, res ) {
   let id =+req.params['id']
 
-  connection.query( `DELETE FROM vehicles WHERE id = ?`, [id], ( err, result ) => {
+  connection.query( `DELETE FROM vehicle WHERE id = ?`, [id], ( err, result ) => {
     if (!err) {
       res.status(204).end();
     } else {

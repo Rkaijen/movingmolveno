@@ -2,7 +2,7 @@ const mysql = require( 'mysql' )
 const express = require( 'express' )
 const app = express()
 const bodyParser = require( 'body-parser' )
-const fn = require('../private/functions');
+const fn = require('../../private/functions');
 
 app.use( bodyParser.json() )
 app.use( function(req, res, next) {
@@ -22,13 +22,13 @@ connection.connect((err) => {
   }
 });
 
-app.post('/rest-api/vehicles', function(req, res) {
+app.post('/api/vehicles', function(req, res) {
 
 let vehicle = req.body;
-connection.query('INSERT INTO vehicles SET ?', vehicle, (err, result) => {
+connection.query('INSERT INTO vehicle SET ?', vehicle, (err, result) => {
   if (!err) {
     res.setHeader('Content-Type', 'application/json')
-    connection.query('SELECT * FROM vehicles where id=?', result.insertId, (err, rows) => {
+    connection.query('SELECT * FROM vehicle where id=?', result.insertId, (err, rows) => {
       if (!err) {
         let question = rows[0];
         if (question) {

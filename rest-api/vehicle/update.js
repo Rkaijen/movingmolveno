@@ -2,7 +2,7 @@ const mysql = require( 'mysql' )
 const express = require( 'express' )
 const app = express()
 const bodyParser = require( 'body-parser' )
-const fn = require('../private/functions');
+const fn = require('../../private/functions');
 
 app.use( bodyParser.json() )
 app.use( function(req, res, next) {
@@ -21,7 +21,7 @@ connection.connect((err) => {
     console.log('Update Vehicle Connected');
   }
 });
-app.put('/rest-api/vehicles/:id', function(req, res) {
+app.put('/api/vehicles/:id', function(req, res) {
 
       // First read id from params
       let id = +req.params.id
@@ -29,7 +29,7 @@ app.put('/rest-api/vehicles/:id', function(req, res) {
 
 
       connection.query(
-        'UPDATE vehicles SET type=?, starting_price=?, price_per_km = ? Where id = ?',
+        'UPDATE vehicle SET type=?, starting_price=?, price_per_km = ? Where id = ?',
         [body.type, body.starting_price, body.price_per_km, id],
         (err, result) => {
           if (!err) {
@@ -37,7 +37,7 @@ app.put('/rest-api/vehicles/:id', function(req, res) {
 
             // end of the update => send response
             // execute a query to find the result of the update
-            connection.query('SELECT * FROM vehicles where id=?', [id], (err, rows) => {
+            connection.query('SELECT * FROM vehicle where id=?', [id], (err, rows) => {
               if (!err) {
                 console.log('Data received from Db:\n');
 
