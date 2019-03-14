@@ -55,3 +55,7 @@ app.get('/api/location/:id', function(req, res) {
     }
   });
 });
+// Run server on port 8081
+let server = app.listen(8081, function() {
+  console.log("Server respond at http://%s:%s", server.address().address, server.address().port)
+});
