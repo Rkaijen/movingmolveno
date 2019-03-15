@@ -23,10 +23,10 @@ connection.connect((err) => {
 });
 
 // Get all free vehicles
-app.get('/api/vehicle/free', function(req, res) {
+app.get('/api/vehicles/free', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
-  // connection.query('SELECT * FROM vehicle', (err, vehicle) => {
-  connection.query('SELECT * FROM vehicle LEFT JOIN ride ON ride.vehicle_id WHERE ride.endtime IS NOT NULL', (err, vehicle) => {
+  // connection.query('SELECT vehicle_id FROM vehicle WHERE endtime IS NOT NULL', (err, vehicle) => {
+  connection.query('SELECT ride.vehicle_id, vehicle.type FROM vehicle RIGHT JOIN ride on vehicle.id=ride.vehicle_id WHERE ride.endtime IS NOT NULL', (err, vehicle) => {
     if (!err) {
       res.end(JSON.stringify(vehicle));
     } else {

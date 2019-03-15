@@ -10,3 +10,7 @@ exports.dbconnection = function(mysql) {
   });
   return connection;
 }
+
+exports.isNumeric = function(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
