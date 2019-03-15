@@ -34,7 +34,7 @@ app.get('/api/vehicles/free/:amount/:distance', function(req, res) {
 
   res.setHeader('Content-Type', 'application/json');
   // connection.query('SELECT vehicle_id FROM vehicle WHERE endtime IS NOT NULL', (err, vehicle) => {
-  connection.query('SELECT ride.vehicle_id, vehicle.type, vehicle.starting_price, vehicle.price_per_km FROM vehicle RIGHT JOIN ride on vehicle.id=ride.vehicle_id', (err, vehicle) => {
+  connection.query('SELECT vehicle.id, vehicle.type, vehicle.starting_price, vehicle.price_per_km FROM vehicle LEFT JOIN ride on ride.vehicle_id=vehicle.id WHERE ride.endtime IS NOT NULL', (err, vehicle) => {
     if (!err) {
       console.log(vehicle.length);
       for (let i in vehicle) {
